@@ -12,13 +12,18 @@ export class GithubService {
 
   constructor(private http: HttpClient) { }
 
+  HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${environment.tokenGit}`
+  });
+
   getSearchUsers(usuario: string): Observable<userGit> {
-    return this.http.get<any>(`${environment.urlGit}/users/${usuario}`)
+    return this.http.get<userGit>(`${environment.urlGit}/users/${usuario}`, {headers: this.HttpHeaders})
       .pipe(catchError(this.handleError));
   }
 
   getReposUser(usuario: string): Observable<Array<repoUserGit>> {
-    return this.http.get<any>(`${environment.urlGit}/users/${usuario}/repos`)
+    return this.http.get<Array<repoUserGit>>(`${environment.urlGit}/users/${usuario}/repos`, {headers: this.HttpHeaders})
     .pipe(catchError(this.handleError));
   }
 

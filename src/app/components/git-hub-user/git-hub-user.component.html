@@ -1,1 +1,35 @@
-<p>git-hub-user works!</p>
+<div class="container">
+    <div class="left-side">
+        <h1>Consulta de Usuarios</h1>
+        <div class="form-group">
+            <input type="text" id="username" placeholder="Ingrese el nombre de usuario" [(ngModel)]="username">
+            <span class="not-user" *ngIf="!userExists">No existe usuario buscado</span>
+        </div>
+        <button (click)="searchUser()">Consultar</button>
+    </div>
+   <div class="right-side" *ngIf="infoUser">
+        <div class="project-card">
+            <img [src]="userGet?.avatar_url" alt="Imagen del proyecto" class="project-image">
+            <p class="project-name"><strong>{{userGet.name ? userGet.name : 'Sin nombre'}}</strong></p>
+            <p class="project-bio">{{userGet.bio ? userGet.bio : 'Sin descripción'}}</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <span>{{ userGet.followers > 0 ? userGet.followers + ' Seguidores' : 'Sin seguidores' }}</span>
+                </div>
+                <div class="stat-item">
+                    <i class="bi bi-folder-fill"></i>
+                    <span>{{ userGet.public_repos > 0 ? userGet.public_repos + ' Repositorios Públicos' : 'Sin Repositorios Públicos' }}</span>
+                </div>
+            </div>
+            <div class="repos-card">
+                <h3>Repositorios:</h3>
+                <ul>
+                    <li *ngFor="let repo of userRepo">
+                        <strong>{{ repo.name }}</strong>: {{ repo.description || 'Sin descripción disponible' }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
